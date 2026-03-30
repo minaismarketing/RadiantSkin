@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radiant Skin Dermatology – Skin Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF7F4;--white:#FFFFFF;--rose:#C9837A;--rose-light:#EDD5D2;--rose-dark:#A3564E;--charcoal:#2C2421;--gray:#8A7E7B;--border:#E8DDD9;--gold:#C4A882;--gold-light:#F0E8DC;--shadow:0 8px 40px rgba(44,36,33,0.10);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;overflow-x:hidden;}
+.hero{background:var(--charcoal);padding:13px 24px;text-align:center;}
+.hero span{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);}
+.wrap{max-width:660px;margin:0 auto;padding:0 18px 60px;}
+.brand{text-align:center;padding:32px 0 0;}
+.brand-name{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:400;letter-spacing:3.5px;text-transform:uppercase;color:var(--charcoal);}
+.brand-rule{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0 0;}
+.brand-rule::before,.brand-rule::after{content:"";flex:1;max-width:55px;height:1px;background:var(--gold);}
+.brand-rule span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+.card{background:var(--white);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;margin-top:26px;animation:fadeUp .45s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.intro-strip{display:grid;grid-template-columns:1fr 1fr 1fr;height:170px;overflow:hidden;position:relative;}
+.intro-strip::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(255,255,255,0.9) 100%);}
+.intro-strip img{width:100%;height:100%;object-fit:cover;filter:saturate(0.8);}
+.intro-body{padding:26px 32px 34px;text-align:center;}
+.badge{display:inline-block;background:var(--gold-light);color:var(--rose-dark);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px;}
+.intro-h{font-family:"Cormorant Garamond",serif;font-size:clamp(26px,6vw,40px);font-weight:600;line-height:1.15;margin-bottom:14px;}
+.intro-h em{font-style:italic;color:var(--rose);}
+.intro-p{font-size:14px;line-height:1.7;color:var(--gray);max-width:440px;margin:0 auto 24px;}
+.trust{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:24px;}
+.trust-i{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--gray);}
+.trust-i svg{color:var(--rose);flex-shrink:0;}
+.prog-wrap{padding:22px 32px 0;}
+.prog-meta{display:flex;justify-content:space-between;margin-bottom:7px;}
+.prog-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);}
+.prog-num{font-size:11px;color:var(--rose);font-weight:500;}
+.prog-bar{background:var(--rose-light);border-radius:100px;height:3px;overflow:hidden;}
+.prog-fill{background:linear-gradient(90deg,var(--rose-light),var(--rose));height:100%;border-radius:100px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.q-body{padding:24px 32px 32px;}
+.q-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);margin-bottom:8px;}
+.q-text{font-family:"Cormorant Garamond",serif;font-size:clamp(19px,4vw,26px);font-weight:600;line-height:1.3;margin-bottom:8px;}
+.q-sub{font-size:13px;color:var(--gray);margin-bottom:18px;line-height:1.5;}
+.img-options{display:flex;flex-direction:column;gap:10px;}
+.img-opt{display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;background:var(--white);transition:all .2s ease;text-align:left;width:100%;}
+.img-opt:hover{border-color:var(--rose);box-shadow:0 3px 16px rgba(201,131,122,0.18);transform:translateY(-1px);}
+.img-opt.selected{border-color:var(--rose);background:var(--rose-light);}
+.opt-img{width:88px;height:72px;object-fit:cover;object-position:center;flex-shrink:0;filter:saturate(0.85);}
+.opt-no-img{width:88px;height:72px;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opt-no-img svg{color:var(--rose);opacity:0.6;}
+.opt-content{padding:12px 16px;flex:1;}
+.opt-title{font-size:14px;font-weight:500;color:var(--charcoal);line-height:1.3;margin-bottom:3px;}
+.opt-desc{font-size:12px;color:var(--gray);line-height:1.4;}
+.img-opt.selected .opt-title{color:var(--rose-dark);}
+.img-opt.selected .opt-desc{color:var(--rose-dark);opacity:0.8;}
+.check-circle{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:14px;transition:all .2s;}
+.img-opt.selected .check-circle{background:var(--rose);border-color:var(--rose);}
+.check-circle svg{opacity:0;transition:opacity .15s;}
+.img-opt.selected .check-circle svg{opacity:1;}
+.txt-options{display:flex;flex-direction:column;gap:9px;}
+.txt-opt{display:flex;align-items:center;gap:13px;padding:13px 16px;background:var(--cream);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--charcoal);transition:all .2s;text-align:left;width:100%;}
+.txt-opt:hover{border-color:var(--rose);background:#FEF9F8;transform:translateX(2px);}
+.txt-opt.selected{border-color:var(--rose);background:var(--rose-light);color:var(--rose-dark);}
+.txt-letter{width:27px;height:27px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;color:var(--gray);transition:all .2s;}
+.txt-opt.selected .txt-letter{background:var(--rose);border-color:var(--rose);color:white;}
+.next-btn{margin-top:20px;width:100%;padding:15px;background:var(--charcoal);color:white;border:none;border-radius:12px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;letter-spacing:.8px;cursor:pointer;transition:all .2s;display:none;}
+.next-btn:hover{background:var(--rose-dark);transform:translateY(-1px);box-shadow:0 5px 18px rgba(163,86,78,.3);}
+.next-btn.show{display:block;animation:fadeUp .3s ease both;}
+.lead-body{padding:32px 32px 38px;text-align:center;}
+.lead-icon{width:58px;height:58px;background:var(--rose-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.lead-icon svg{color:var(--rose-dark);}
+.lead-h{font-family:"Cormorant Garamond",serif;font-size:clamp(21px,5vw,30px);font-weight:600;line-height:1.25;margin-bottom:8px;}
+.lead-p{font-size:13.5px;color:var(--gray);line-height:1.6;max-width:360px;margin:0 auto 24px;}
+.fg{margin-bottom:13px;text-align:left;}
+.fg label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-bottom:5px;}
+.fg input{width:100%;padding:12px 15px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--charcoal);outline:none;transition:border-color .2s;}
+.fg input:focus{border-color:var(--rose);background:#FEF9F8;}
+.fg input::placeholder{color:#C5B8B4;}
+.sub-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--rose-dark),var(--rose));color:white;border:none;border-radius:12px;font-family:"DM Sans",sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;margin-top:6px;}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(163,86,78,.35);}
+.priv{font-size:11px;color:var(--gray);margin-top:12px;line-height:1.5;}
+.res-header{background:var(--charcoal);padding:34px 32px 30px;text-align:center;position:relative;overflow:hidden;}
+.res-header::before{content:"";position:absolute;top:-40px;right:-40px;width:150px;height:150px;border-radius:50%;background:rgba(201,131,122,.12);}
+.res-badge{display:inline-block;background:rgba(201,131,122,.2);color:var(--rose-light);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:12px;position:relative;z-index:1;}
+.res-title{font-family:"Cormorant Garamond",serif;font-size:clamp(20px,4.5vw,32px);font-weight:600;color:white;line-height:1.2;margin-bottom:8px;position:relative;z-index:1;}
+.res-sub{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:1px;position:relative;z-index:1;}
+.res-body{padding:28px 32px 38px;}
+.res-desc{font-size:14.5px;line-height:1.75;color:var(--charcoal);margin-bottom:22px;}
+.res-rec{background:var(--gold-light);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:24px;}
+.res-rec-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.res-rec-text{font-size:13.5px;color:var(--charcoal);line-height:1.6;}
+.treatments{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;}
+.tx{display:flex;align-items:center;gap:11px;padding:11px 15px;background:var(--cream);border-radius:10px;border:1px solid var(--border);}
+.tx-icon{width:30px;height:30px;background:var(--rose-light);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tx-icon svg{color:var(--rose-dark);}
+.tx-text{font-size:13px;color:var(--charcoal);font-weight:500;}
+.cta-btn{display:block;width:100%;padding:17px;background:linear-gradient(135deg,var(--rose-dark),var(--rose));color:white;border:none;border-radius:12px;font-family:"DM Sans",sans-serif;font-size:15px;font-weight:500;text-align:center;text-decoration:none;cursor:pointer;transition:all .25s;margin-bottom:14px;}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 9px 26px rgba(163,86,78,.35);}
+.cta-note{text-align:center;font-size:11.5px;color:var(--gray);}
+.footer{text-align:center;margin-top:28px;padding-bottom:16px;}
+.footer p{font-size:11px;color:var(--gray);}
+.screen{display:none;}
+.screen.active{display:block;}
+@media(max-width:500px){
+  .intro-body,.q-body,.lead-body,.res-body{padding:20px 18px 28px;}
+  .prog-wrap{padding:16px 18px 0;}
+  .res-header{padding:26px 18px 22px;}
+  .opt-img,.opt-no-img{width:72px;height:60px;}
+}
+</style>
+</head>
+<body>
+<div class="hero"><span>&#10022; Radiant Skin Dermatology &mdash; Complimentary Consultation Available</span></div>
+<div class="wrap">
+  <div class="brand">
+    <div class="brand-name">Radiant Skin Dermatology</div>
+    <div class="brand-rule"><span>Skin Health Assessment</span></div>
+  </div>
+
+  <div id="s-intro" class="screen active">
+    <div class="card">
+      <div class="intro-strip">
+        <img src="img-acne.jpg" style="object-position:center 30%;" alt="">
+        <img src="img-clear.jpg" alt="">
+        <img src="img-texture.jpg" alt="">
+      </div>
+      <div class="intro-body">
+        <div class="badge">2-Minute Skin Analysis</div>
+        <h1 class="intro-h">Still Guessing Why Your<br>Skin <em>Won&rsquo;t Clear Up?</em></h1>
+        <p class="intro-p">Most people spend years and thousands of dollars on the wrong products. Take this 2-minute quiz and discover exactly what&rsquo;s holding your skin back &mdash; and what actually works.</p>
+        <div class="trust">
+          <div class="trust-i"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Board-Certified Dermatologists</div>
+          <div class="trust-i"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Under 2 Minutes</div>
+          <div class="trust-i"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>1,200+ Patients Helped</div>
+        </div>
+        <button class="sub-btn" onclick="startQuiz()" style="max-width:320px;">Find My Skin Solution &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-quiz" class="screen">
+    <div class="card">
+      <div class="prog-wrap">
+        <div class="prog-meta"><span class="prog-label">Progress</span><span class="prog-num" id="prog-num">1 of 6</span></div>
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:16%"></div></div>
+      </div>
+      <div class="q-body">
+        <div class="q-num" id="q-num">Question 1</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="q-sub" id="q-sub"></div>
+        <div id="opts-container"></div>
+        <button class="next-btn" id="next-btn" onclick="nextQ()">Continue &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-lead" class="screen">
+    <div class="card">
+      <div class="lead-body">
+        <div class="lead-icon"><svg width="25" height="25" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+        <h2 class="lead-h">Your Personalized Results Are Ready</h2>
+        <p class="lead-p">Enter your details and we&rsquo;ll show you exactly what your skin needs &mdash; and how to get there.</p>
+        <div class="fg"><label>First Name</label><input type="text" id="fname" placeholder="Your first name" autocomplete="given-name"></div>
+        <div class="fg"><label>Email Address</label><input type="email" id="email" placeholder="you@email.com" autocomplete="email"></div>
+        <div class="fg"><label>Phone Number</label><input type="tel" id="phone" placeholder="(555) 000-0000" autocomplete="tel"></div>
+        <button class="sub-btn" onclick="showResults()">See My Skin Results &rarr;</button>
+        <p class="priv">&#128274; 100% private. We never sell or share your data.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-results" class="screen">
+    <div class="card" id="result-card"></div>
+  </div>
+
+  <div class="footer"><p>&copy; Radiant Skin Dermatology &middot; All rights reserved</p></div>
+</div>
+
+<script>
+var questions=[
+  {text:"What’s the skin concern that bothers you the most?",sub:"Choose the one that feels most urgent to you.",type:"img",options:[
+    {title:"Painful breakouts or cystic acne",desc:"Deep, inflamed bumps that won’t go away",img:"img-acne.jpg",profile:"acne"},
+    {title:"Uneven texture or acne scars",desc:"Rough surface, large pores, or leftover marks",img:"img-texture.jpg",profile:"texture"},
+    {title:"Fine lines or loss of firmness",desc:"Dullness, sagging, or signs of aging",img:"img-clear.jpg",profile:"aging"},
+    {title:"Redness, sensitivity, or dark spots",desc:"Reactive skin, flushing, or hyperpigmentation",img:null,profile:"sensitivity"}
+  ]},
+  {text:"How long have you been dealing with this?",sub:"",type:"txt",options:[
+    {title:"Just started — weeks or months",profile:"sensitivity"},
+    {title:"On and off for 1–3 years",profile:"texture"},
+    {title:"Chronic struggle for 3+ years",profile:"acne"},
+    {title:"Got worse recently (stress, hormones, diet)",profile:"acne"}
+  ]},
+  {text:"What have you already tried?",sub:"",type:"txt",options:[
+    {title:"Drugstore or Sephora products",profile:"texture"},
+    {title:"Natural or DIY remedies",profile:"sensitivity"},
+    {title:"Prescription treatments from a doctor",profile:"acne"},
+    {title:"Honestly not sure what to try",profile:"aging"}
+  ]},
+  {text:"How would you describe your skin on most days?",sub:"Pick the one that fits best.",type:"img",options:[
+    {title:"Oily — shiny & frequent breakouts",desc:"Enlarged pores, congestion, greasy by midday",img:"img-acne.jpg",profile:"acne"},
+    {title:"Dry or flaky",desc:"Tight, uncomfortable, sometimes peeling",img:null,profile:"aging"},
+    {title:"Combination",desc:"Oily T-zone, dry everywhere else",img:"img-texture.jpg",profile:"texture"},
+    {title:"Sensitive — reacts easily",desc:"Redness, stinging, or irritation from products",img:"img-clear.jpg",profile:"sensitivity"}
+  ]},
+  {text:"What’s your biggest skin frustration?",sub:"",type:"txt",options:[
+    {title:"Nothing works long-term",profile:"acne"},
+    {title:"I don’t know what’s causing the problem",profile:"sensitivity"},
+    {title:"Products make my skin worse",profile:"sensitivity"},
+    {title:"It affects my confidence",profile:"texture"}
+  ]},
+  {text:"What would your ideal skin look like?",sub:"If you woke up tomorrow with your dream skin…",type:"img",options:[
+    {title:"Clear — zero breakouts",desc:"Smooth, clean, no active acne",img:"img-acne.jpg",profile:"acne"},
+    {title:"Smooth & even-toned",desc:"No scars, texture, or dark spots",img:"img-texture.jpg",profile:"texture"},
+    {title:"Glowing & youthful",desc:"Firm, radiant, full of life",img:"img-clear.jpg",profile:"aging"},
+    {title:"Calm & balanced",desc:"No redness, no reactivity",img:null,profile:"sensitivity"}
+  ]}
+];
+
+var answers=[],currentQ=0;
+
+function startQuiz(){showScreen("s-quiz");renderQ();}
+
+function renderQ(){
+  var q=questions[currentQ];
+  document.getElementById("q-num").textContent="Question "+(currentQ+1);
+  document.getElementById("q-text").textContent=q.text;
+  var subEl=document.getElementById("q-sub");
+  subEl.textContent=q.sub||"";
+  subEl.style.display=q.sub?"block":"none";
+  document.getElementById("prog-num").textContent=(currentQ+1)+" of "+questions.length;
+  document.getElementById("prog-fill").style.width=(((currentQ+1)/questions.length)*100)+"%";
+  var container=document.getElementById("opts-container");
+  container.innerHTML="";
+  var nextBtn=document.getElementById("next-btn");
+  nextBtn.classList.remove("show");
+
+  if(q.type==="img"){
+    var grid=document.createElement("div");
+    grid.className="img-options";
+    for(var i=0;i<q.options.length;i++){
+      (function(idx){
+        var opt=q.options[idx];
+        var btn=document.createElement("button");
+        btn.className="img-opt";
+        var imgHTML=opt.img
+          ?'<img src="'+opt.img+'" class="opt-img" alt="" loading="eager">'
+          :'<div class="opt-no-img"><svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>';
+        btn.innerHTML=imgHTML+
+          '<div class="opt-content"><div class="opt-title">'+opt.title+'</div>'+(opt.desc?'<div class="opt-desc">'+opt.desc+'</div>':'')+'</div>'+
+          '<div class="check-circle"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>';
+        btn.onclick=function(){selectImg(idx,btn,grid);};
+        grid.appendChild(btn);
+      })(i);
+    }
+    if(answers[currentQ]!==undefined){
+      grid.querySelectorAll(".img-opt")[answers[currentQ]].classList.add("selected");
+      nextBtn.classList.add("show");
+    }
+    container.appendChild(grid);
+  } else {
+    var list=document.createElement("div");
+    list.className="txt-options";
+    var L=["A","B","C","D"];
+    for(var j=0;j<q.options.length;j++){
+      (function(idx){
+        var btn=document.createElement("button");
+        btn.className="txt-opt";
+        btn.innerHTML='<span class="txt-letter">'+L[idx]+'</span>'+q.options[idx].title;
+        btn.onclick=function(){selectTxt(idx,btn,list);};
+        list.appendChild(btn);
+      })(j);
+    }
+    if(answers[currentQ]!==undefined){
+      var b2=list.querySelectorAll(".txt-opt");
+      b2[answers[currentQ]].classList.add("selected");
+      b2[answers[currentQ]].querySelector(".txt-letter").textContent="✓";
+      nextBtn.classList.add("show");
+    }
+    container.appendChild(list);
+  }
+}
+
+function selectImg(idx,btn,grid){
+  answers[currentQ]=idx;
+  grid.querySelectorAll(".img-opt").forEach(function(b){b.classList.remove("selected");});
+  btn.classList.add("selected");
+  document.getElementById("next-btn").classList.add("show");
+}
+
+function selectTxt(idx,btn,list){
+  answers[currentQ]=idx;
+  var L=["A","B","C","D"];
+  list.querySelectorAll(".txt-opt").forEach(function(b,i){b.classList.remove("selected");b.querySelector(".txt-letter").textContent=L[i];});
+  btn.classList.add("selected");
+  btn.querySelector(".txt-letter").textContent="✓";
+  document.getElementById("next-btn").classList.add("show");
+}
+
+function nextQ(){
+  if(answers[currentQ]===undefined)return;
+  currentQ++;
+  if(currentQ<questions.length){renderQ();}else{showScreen("s-lead");}
+}
+
+function getProfile(){
+  var t={acne:0,texture:0,aging:0,sensitivity:0};
+  for(var i=0;i<answers.length;i++){t[questions[i].options[answers[i]].profile]++;}
+  t[questions[0].options[answers[0]].profile]++;
+  var best="acne",top=0;
+  for(var k in t){if(t[k]>top){top=t[k];best=k;}}
+  return best;
+}
+
+var R={
+  acne:{badge:"Skin Type: Active Breakout Prone",title:"Your Skin Is Stuck in an Acne Cycle That Over-the-Counter Products Can’t Break",sub:"Clinical Acne Treatment Candidate",desc:"What you’re experiencing isn’t a willpower problem — it’s a biological one. Active cystic acne is driven by hormones, bacteria, and oil production that drugstore products simply aren’t designed to address at the root. The longer this continues without proper intervention, the higher the risk of permanent scarring.",rec:"You’re likely a strong candidate for medical-grade acne treatment — which may include prescription topicals, oral options, or in-office procedures like laser therapy or chemical peels. A board-certified dermatologist can identify your exact acne type and end the cycle for good.",treatments:["Prescription Topical & Oral Therapy","Medical-Grade Chemical Peels","Blue Light / Laser Acne Treatment"],cta:"Book Your Free Acne Consultation",link:"https://www.radiantskinderm.com/book"},
+  texture:{badge:"Skin Type: Post-Acne & Texture Concerns",title:"You’ve Won the Breakout Battle — But the Scars Are Still Telling the Story",sub:"Resurfacing & Scar Revision Candidate",desc:"Acne scars, enlarged pores, and uneven texture are left behind when inflammation damages deeper skin layers — and no serum or moisturizer can reverse that structural damage. The good news? Modern dermatology has completely changed the game.",rec:"Treatments like microneedling, fractional laser resurfacing, and medical-grade retinoid protocols are clinically proven to rebuild collagen and dramatically smooth skin texture in as few as 2–4 treatments.",treatments:["Microneedling with RF","Fractional Laser Resurfacing","Medical-Grade Retinoid Protocol"],cta:"Book Your Free Texture Consultation",link:"https://www.radiantskinderm.com/book"},
+  aging:{badge:"Skin Type: Anti-Aging & Renewal Focus",title:"Your Skin Is Ready for a Reset — Here’s What Will Actually Make a Difference",sub:"Rejuvenation & Anti-Aging Candidate",desc:"Fine lines, dullness, and loss of firmness are a natural cellular process that accelerates without proper support. Most anti-aging products only address the surface, while the real changes happen in the collagen and elastin layers beneath.",rec:"Dermatologist-prescribed protocols combining medical-grade retinoids and in-office treatments like neuromodulators, PRP, or photorejuvenation can genuinely turn back the clock in ways retail products simply cannot match.",treatments:["Medical-Grade Retinoid Protocol","Photorejuvenation / IPL","Neuromodulators & Fillers Consult"],cta:"Book Your Free Anti-Aging Consultation",link:"https://www.radiantskinderm.com/book"},
+  sensitivity:{badge:"Skin Type: Reactive & Sensitivity-Prone",title:"Your Skin Isn’t Difficult — It’s Just Been Misunderstood",sub:"Rosacea & Sensitivity Specialist Candidate",desc:"Redness, flushing, and sensitivity are signals that your skin’s barrier is compromised or that an underlying condition like rosacea may be at play. Using the wrong products — even gentle ones — can make this dramatically worse over time.",rec:"A dermatologist can pinpoint whether you’re dealing with rosacea, contact dermatitis, or barrier dysfunction and prescribe a protocol that truly calms and repairs. There are highly effective prescription options many patients have never been told about.",treatments:["Rosacea Diagnosis & Treatment","Barrier Repair Protocol","Prescription Anti-Inflammatory Therapy"],cta:"Book Your Free Sensitivity Consultation",link:"https://www.radiantskinderm.com/book"}
+};
+
+function showResults(){
+  var fn=document.getElementById("fname").value.trim();
+  var em=document.getElementById("email").value.trim();
+  if(!fn||!em){alert("Please enter your name and email to see your results.");return;}
+  var r=R[getProfile()];
+  var ix=['<path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/>','<path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>','<path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>'];
+  var th="";for(var i=0;i<r.treatments.length;i++){th+='<div class="tx"><div class="tx-icon"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">'+ix[i]+'</svg></div><span class="tx-text">'+r.treatments[i]+'</span></div>';}
+  document.getElementById("result-card").innerHTML='<div class="res-header"><div class="res-badge">'+r.badge+'</div><h2 class="res-title">'+r.title+'</h2><p class="res-sub">'+(fn?"Personalized for "+fn:"Your Personalized Analysis")+'</p></div><div class="res-body"><p class="res-desc">'+r.desc+'</p><div class="res-rec"><div class="res-rec-label">Our Recommendation</div><p class="res-rec-text">'+r.rec+'</p></div><p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:11px;">Treatments to Discuss</p><div class="treatments">'+th+'</div><a class="cta-btn" href="'+r.link+'" target="_blank">'+r.cta+' &rarr;</a><p class="cta-note">&#10003; Completely free &nbsp;&middot;&nbsp; No obligation &nbsp;&middot;&nbsp; Board-certified dermatologist</p></div>';
+  showScreen("s-results");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
